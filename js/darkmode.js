@@ -1,17 +1,43 @@
 function googleMeetDark(){
-    var bottom = document.children[0].children[1].children[1].children[2].children[0].children[0].children[4].children[2].children[8];
-    var sidebar = document.children[0].children[1].children[1].children[2].children[0].children[0].children[4].children[2].children[2]
-    var topbar = document.children[0].children[1].children[1].children[2].children[0].children[0].children[4].children[2].children[5]
-    sidebar.style.filter="invert(1)";
-    topbar.children[2].children[0].children[1].children[4].style.display='none'
-    topbar.children[2].children[0].children[1].children[0].style.display='none';
-    topbar.style.opacity='0.7'
-    bottom.style.background='transparent';
-    bottom.children[2].children[1].style.display='none';
-    bottom.children[2].children[2].style.display='none';
-    topbar.children[1].children[1].children[0].children[1].style.display='none';
-    topbar.children[2].children[0].children[1].children[6].style.display="none";
-    topbar.children[2].children[0].children[1].style.opacity="0.8";
+document.body.style.transition="1s ease";
+if(!document.querySelector('[aria-label="Leave call"]')){
+    console.log("Not Joined Call!");
+    var status=document.querySelector('[aria-label="Leave call"]');
+    var listening = setInterval(()=>{
+        if(status){
+            setTimeout(()=>{DoMagic();},2000);
+            clearInterval(listening);
+        }else{
+            status=document.querySelector('[aria-label="Leave call"]');
+            console.log("Waiting to Join Call");
+        }
+    },3000)
+}else{
+    console.log("Joined Call");
+    setTimeout(()=>{DoMagic();},2000);
 }
 
+function DoMagic(){
+    var mic = document.querySelector('[data-is-muted]');
+    var parent = mic.parentElement.parentElement.parentElement.parentElement.parentElement;
+    var bottom = parent.children[8];
+    bottom.style.background='transparent';
+    bottom.children[2].children[1].style.display='none';
+    //bottom.children[2].children[2].style.display='none';
+
+    var sidebar = parent.children[2]
+    sidebar.style.filter="invert(0.9)";
+
+    var rightnotif=parent.children[10];
+    rightnotif.style.opacity=0.4;
+    rightnotif.style.filter="invert(0.9)";
+    
+    parent.children[5].children[2].children[0].children[1].children[4].style.display='none'
+    parent.children[5].children[2].children[0].children[1].children[0].style.display='none';
+    parent.children[5].style.opacity='0.7';
+    parent.children[5].children[2].children[0].children[1].children[6].style.display="none";
+    parent.children[5].children[2].children[0].children[1].style.opacity="0.5";
+    console.log("Successfully Customized!")
+}
+}
 googleMeetDark()
